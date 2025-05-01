@@ -1,10 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const path = require("path"); // Add this line
+const path = require("path");
 const authRoutes = require("./routes/auth");
 const loopsRouter = require('./routes/loops');
 const roomsRouter = require('./routes/rooms');
+const userRoutes = require('./routes/users');
+const mixdownsRouter = require('./routes/mixdowns');
 require("dotenv").config();
 
 const app = express();
@@ -26,9 +28,11 @@ app.use(express.static('public'));
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 // Routes
-app.use("/auth", authRoutes);
-app.use('/rooms', roomsRouter); // Add this line
-app.use('/rooms', loopsRouter);
+app.use('/auth', require('./routes/auth'));
+app.use('/rooms', require('./routes/rooms'));
+app.use('/loops', require('./routes/loops'));
+app.use('/users', userRoutes);
+app.use('/mixdowns', mixdownsRouter); // Add this line
 
 const PORT = process.env.PORT || 5000;
 
